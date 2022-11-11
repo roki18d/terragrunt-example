@@ -14,6 +14,14 @@ locals {
   env = local.env_vars.env
 }
 
+dependency "s3_bucket" {
+  config_path = "${dirname(find_in_parent_folders())}/modules/s3_bucket/examples"
+
+  mock_outputs = {
+    bucket_name = "hoge"
+  }
+}
+
 inputs = {
-  bucket_name = "${local.org}-example-bucket-${local.env}"
+  bucket_name = dependency.s3_bucket.outputs.bucket_name
 }
