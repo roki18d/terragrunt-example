@@ -1,4 +1,5 @@
-
+.terragrunt-cache
+.terraform.lock.hcl
 
 *.tfvars
 .env
