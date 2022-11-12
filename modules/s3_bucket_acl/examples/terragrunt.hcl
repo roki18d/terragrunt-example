@@ -24,4 +24,5 @@ dependency "s3_bucket" {
 
 inputs = {
   bucket_name = dependency.s3_bucket.outputs.bucket_name
+  canned_acl  = "private"
 }
