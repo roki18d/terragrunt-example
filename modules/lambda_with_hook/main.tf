@@ -38,12 +38,12 @@ resource "aws_iam_role" "sample" {
 }
 
 resource "aws_lambda_layer_version" "sample" {
-  filename   = "layer.zip"
+  filename   = "src/layer.zip"
   layer_name = "sample-layer"
 
   compatible_runtimes      = ["python3.8", "python3.9"]
   compatible_architectures = ["x86_64", "arm64"]
-  source_code_hash         = filebase64sha256("${path.module}/layer.zip")
+  source_code_hash         = filebase64sha256("${path.module}/src/requirements.txt")
 }
 
 resource "aws_lambda_function" "sample" {
@@ -51,9 +51,9 @@ resource "aws_lambda_function" "sample" {
   role             = aws_iam_role.sample.arn
   runtime          = "python3.9"
   package_type     = "Zip"
-  filename         = "${path.module}/package.zip"
+  filename         = "${path.module}/src/package.zip"
   handler          = "main.handler"
-  source_code_hash = filebase64sha256("${path.module}/package.zip")
+  source_code_hash = filebase64sha256("${path.module}/src/package.zip")
 
   layers = [ aws_lambda_layer_version.sample.arn ]
 
